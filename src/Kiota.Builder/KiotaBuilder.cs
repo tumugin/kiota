@@ -1087,8 +1087,13 @@ public partial class KiotaBuilder
         var propertyName = childIdentifier.CleanupSymbolName();
         if (structuralPropertiesReservedNameProvider.ReservedNames.Contains(propertyName))
             propertyName += "Property";
-        var resultType = existingType ?? GetPrimitiveType(propertySchema, childType);
+        var resultType = existingType != null
+            ? (CodeTypeBase)existingType.Clone()
+            : GetPrimitiveType(propertySchema, childType);
         if (resultType == null) return null;
+        
+        resultType.IsNullable = propertySchema?.Nullable ?? true;
+        
         var prop = new CodeProperty
         {
             Name = propertyName,
@@ -1175,6 +1180,7 @@ public partial class KiotaBuilder
         {
             Name = typeName,
             IsExternal = isExternal,
+            IsNullable = typeSchema?.Nullable ?? true,
         };
     }
     private const string RequestBodyPlainTextContentType = "text/plain";

@@ -62,7 +62,6 @@ public class CliRefiner : CSharpRefiner, ILanguageRefiner
             CapitalizeNamespacesFirstLetters(generatedCode);
             cancellationToken.ThrowIfCancellationRequested();
             ReplaceBinaryByNativeType(generatedCode, "Stream", "System.IO");
-            MakeEnumPropertiesNullable(generatedCode);
             /* Exclude the following as their names will be capitalized making the change unnecessary in this case sensitive language
              * code classes, class declarations, property names, using declarations, namespace names
              * Exclude CodeMethod as the return type will also be capitalized (excluding the CodeType is not enough since this is evaluated at the code method level)
