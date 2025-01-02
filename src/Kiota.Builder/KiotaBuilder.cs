@@ -1082,7 +1082,7 @@ public partial class KiotaBuilder
     }
     private static readonly StructuralPropertiesReservedNameProvider structuralPropertiesReservedNameProvider = new();
 
-    private CodeProperty? CreateProperty(string childIdentifier, string childType, OpenApiSchema? propertySchema = null, CodeTypeBase? existingType = null, CodePropertyKind kind = CodePropertyKind.Custom)
+    private CodeProperty? CreateProperty(string childIdentifier, string childType, OpenApiSchema? propertySchema = null, OpenApiSchema? parentSchema = null, CodeTypeBase? existingType = null, CodePropertyKind kind = CodePropertyKind.Custom)
     {
         var propertyName = childIdentifier.CleanupSymbolName();
         if (structuralPropertiesReservedNameProvider.ReservedNames.Contains(propertyName))
@@ -1091,8 +1091,19 @@ public partial class KiotaBuilder
             ? (CodeTypeBase)existingType.Clone()
             : GetPrimitiveType(propertySchema, childType);
         if (resultType == null) return null;
-        
-        resultType.IsNullable = propertySchema?.Nullable ?? true;
+
+        var propertyNullability = new
+        {
+            propertySchema?.Nullable, Required = parentSchema?.Required.Contains(childIdentifier)
+        };
+        resultType.IsNullable = propertyNullability switch
+        {
+            { Required: false, Nullable: true } => true,
+            { Required: true, Nullable: true } => true,
+            { Required: false, Nullable: false } => false,
+            { Required: true, Nullable: false } => false,
+            _ => true
+        };
         
         var prop = new CodeProperty
         {
@@ -2278,7 +2289,7 @@ public partial class KiotaBuilder
                         logger.LogWarning("Omitted property {PropertyName} for model {ModelName} in API path {ApiPath}, the schema is invalid.", x.Key, model.Name, currentNode.Path);
                         return null;
                     }
-                    return CreateProperty(x.Key, definition.Name, propertySchema: propertySchema, existingType: definition);
+                    return CreateProperty(x.Key, definition.Name, propertySchema: propertySchema, parentSchema: schema, existingType: definition);
                 })
                 .OfType<CodeProperty>()
                 .ToArray();
