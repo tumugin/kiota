@@ -1191,7 +1191,6 @@ public partial class KiotaBuilder
         {
             Name = typeName,
             IsExternal = isExternal,
-            IsNullable = typeSchema?.Nullable ?? true,
         };
     }
     private const string RequestBodyPlainTextContentType = "text/plain";
@@ -2476,6 +2475,7 @@ public partial class KiotaBuilder
             IsExternal = true,
         };
         resultType.CollectionKind = parameter.Schema.IsArray() ? CodeTypeBase.CodeTypeCollectionKind.Array : default;
+        resultType.IsNullable = !parameter.Required || parameter.Schema.Nullable;
         var prop = new CodeProperty
         {
             Name = parameter.Name.SanitizeParameterNameForCodeSymbols(),

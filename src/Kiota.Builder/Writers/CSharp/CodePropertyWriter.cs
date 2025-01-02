@@ -25,7 +25,7 @@ public class CodePropertyWriter : BaseElementWriter<CodeProperty, CSharpConventi
             CSharpConventionService.WriteNullableMiddle(writer);
         }
 
-        WritePropertyInternal(codeElement, writer, propertyType);// Always write the normal way
+        WritePropertyInternal(codeElement, writer, propertyType.Replace("?", "", StringComparison.InvariantCulture));// Always write the normal way
 
         if (isNullableReferenceType)
             CSharpConventionService.WriteNullableClosing(writer);

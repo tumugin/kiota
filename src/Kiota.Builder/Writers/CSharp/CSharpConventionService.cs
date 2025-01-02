@@ -204,8 +204,8 @@ public class CSharpConventionService : CommonLanguageConventionService
                 $"<{string.Join(", ", currentType.GenericTypeParameterValues.Select(x => GetTypeString(x, targetElement, includeCollectionInformation)))}>" :
                 string.Empty;
             if (currentType.ActionOf && includeActionInformation)
-                return $"Action<{collectionPrefix}{typeName}{genericParameters}{nullableSuffix}{collectionSuffix}>";
-            return $"{collectionPrefix}{typeName}{genericParameters}{nullableSuffix}{collectionSuffix}";
+                return $"Action<{collectionPrefix}{typeName}{genericParameters}{collectionSuffix}{nullableSuffix}>";
+            return $"{collectionPrefix}{typeName}{genericParameters}{collectionSuffix}{nullableSuffix}";
         }
 
         throw new InvalidOperationException($"type of type {code?.GetType()} is unknown");
