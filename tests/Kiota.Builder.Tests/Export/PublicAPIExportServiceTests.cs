@@ -166,10 +166,10 @@ components:
         Assert.Contains("exportNamespace.Graph-->*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.BaseRequestBuilder", exportContents); // captures class inheritance
         Assert.Contains("exportNamespace.models.microsoft.graph.userable~~>*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder; *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable", exportContents);// captures implemented interfaces
         Assert.Contains("exportNamespace.models.microsoft.graph.user~~>Userable", exportContents);// captures implemented MODEL interfaces
-        Assert.Contains("exportNamespace.models.microsoft.graph.userable::|public|GetId():*string", exportContents);// captures property getter location,type and access inheritance
-        Assert.Contains("exportNamespace.models.microsoft.graph.userable::|public|SetId(value:*string):void", exportContents);// captures property setter location,type and access inheritance
-        Assert.Contains("exportNamespace.models.microsoft.graph.user::|public|GetId():*string", exportContents);// captures property getter location,type and access inheritance
-        Assert.Contains("exportNamespace.models.microsoft.graph.user::|public|SetId(value:*string):void", exportContents);// captures property setter location,type and access inheritance
+        Assert.Contains("exportNamespace.models.microsoft.graph.userable::|public|GetId():string", exportContents);// captures property getter location,type and access inheritance
+        Assert.Contains("exportNamespace.models.microsoft.graph.userable::|public|SetId(value:string):void", exportContents);// captures property setter location,type and access inheritance
+        Assert.Contains("exportNamespace.models.microsoft.graph.user::|public|GetId():string", exportContents);// captures property getter location,type and access inheritance
+        Assert.Contains("exportNamespace.models.microsoft.graph.user::|public|SetId(value:string):void", exportContents);// captures property setter location,type and access inheritance
         Assert.Contains("exportNamespace.me.GetRequestBuilder::|public|constructor(rawUrl:string; requestAdapter:RequestAdapter):void", exportContents); // captures constructors, their parameters(name and types), return and access 
         Assert.Contains("exportNamespace.me.GetRequestBuilder::|public|ToGetRequestInformation(ctx:context.Context; requestConfiguration?:*GetRequestBuilderGetRequestConfiguration):*RequestInformation", exportContents);// captures methods, their parameters(name and types), return and access
         Assert.Contains("exportNamespace.models.microsoft.graph.user::|static|public|CreateFromDiscriminatorValue(parseNode:ParseNode):Parsable", exportContents);// captures static methods too :)
